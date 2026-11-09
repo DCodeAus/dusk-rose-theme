@@ -1,0 +1,37 @@
+# Security scans that CodeQL doesn't cover. CodeQL itself (Python + the
+# workflow files) runs via GitHub's "default setup" in Settings > Code security.
+#   - PSScriptAnalyzer: checks the PowerShell installers for risky patterns
+#     (e.g. Invoke-Expression on variables, plain-text passwords).
+#   - ShellCheck: checks install.sh for quoting bugs and unsafe shell use.
+# Findings show up under the repo's Security > Code scanning tab.
+name: Security scan
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 21 * * 0"   # weekly, Monday 8am AEDT
+permissions:
+  contents: read
+jobs:
+  powershell:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write   # needed to upload results to Code scanning
+    steps:
+      - uses: actions/checkout@v4
+      - uses: microsoft/psscriptanalyzer-action@v1.1
+        with:
+          path: .
+          recurse: true
+          output: psscriptanalyzer.sarif
+      - uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: psscriptanalyzer.sarif
+          category: psscriptanalyzer
+  shell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ludeeus/action-shellcheck@2.0.0

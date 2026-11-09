@@ -9,6 +9,10 @@
 # AFTERWARDS     In VS Code: Ctrl+Shift+P > "Developer: Reload Window".
 #                Pick the theme with Ctrl+K Ctrl+T if it isn't already selected.
 # =============================================================================
+# Printing progress to the screen is the point of an installer, so the
+# "avoid Write-Host" style warning doesn't apply here.
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Justification = 'Interactive installer output')]
+param()
 $ErrorActionPreference = 'Stop'
 
 $Repo = 'DCodeAus/dusk-rose-theme'
