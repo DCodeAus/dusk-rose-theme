@@ -21,6 +21,15 @@
 #                If you downloaded this file and Windows says "running scripts
 #                is disabled", use (affects this one run only, no admin):
 #                  powershell -ExecutionPolicy Bypass -File .\install-putty.ps1
+# PREVIEW FIRST  Add -WhatIf to any of the commands to see exactly what would
+#                change, without changing anything (no registry writes, no
+#                backup file). Each change prints a line like:
+#                  What if: Performing the operation "set Colour0 = 214,215,224"
+#                  on target "Default Settings".
+#                For example:
+#                  & ([scriptblock]::Create((irm https://raw.githubusercontent.com/DCodeAus/dusk-rose-theme/main/install-putty.ps1))) -WhatIf
+#                  .\install-putty.ps1 -WhatIf
+#                It also works with -Restore, to preview an undo.
 # AFTERWARDS     Open PuTTY and load a session - it's already themed.
 #                (PuTTY can't follow Windows light/dark mode, so pick one.)
 # =============================================================================
@@ -84,6 +93,7 @@ function Set-PuttySetting {
 if ($Restore) {
     $Settings = @(ConvertFrom-RegText (Get-Content $Restore -Raw))
     Set-PuttySetting $Settings
+    if ($WhatIfPreference) { Write-Host "Preview only - nothing was restored."; return }
     Write-Host "Restored $($Settings.Count) setting(s) from $Restore"
     return
 }
@@ -128,8 +138,9 @@ foreach ($Session in $Targets) {
     }
     $Lines += ''
 }
+# With -WhatIf, Set-Content only reports what it would write.
 Set-Content -Path $Backup -Value $Lines -Encoding Unicode
-Write-Host "Backed up your current PuTTY settings to $Backup"
+if (-not $WhatIfPreference) { Write-Host "Backed up your current PuTTY settings to $Backup" }
 
 # --- 4. Apply the theme -------------------------------------------------------
 foreach ($Session in $Targets) {
@@ -137,7 +148,11 @@ foreach ($Session in $Targets) {
         [pscustomobject]@{ Session = $Session; Name = $_.Name; Type = $_.Type; Data = $_.Data }
     })
     # Session names are stored with spaces as %20; show them normally.
-    Write-Host ('  themed: ' + ($Session -replace '%20', ' '))
+    if (-not $WhatIfPreference) { Write-Host ('  themed: ' + ($Session -replace '%20', ' ')) }
+}
+if ($WhatIfPreference) {
+    Write-Host "Preview only - nothing was changed. Run the same command without -WhatIf to apply it."
+    return
 }
 Write-Host "Done - Rose All Night ($Variant) applied to $($Targets.Count) PuTTY session(s)."
 Write-Host "To undo: .\install-putty.ps1 -Restore `"$Backup`""
