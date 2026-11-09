@@ -33,7 +33,7 @@ if (-not $Asset) {
 # Download to the temp folder, install (--force replaces any older copy), tidy up.
 $File = Join-Path $env:TEMP $Asset.name
 Write-Host "Downloading $($Asset.name)..."
-Invoke-WebRequest $Asset.browser_download_url -OutFile $File
+Invoke-WebRequest $Asset.browser_download_url -OutFile $File -UseBasicParsing
 code --install-extension $File --force
 Remove-Item $File
 Write-Host 'Done. Reload VS Code (Ctrl+Shift+P > Developer: Reload Window).'
