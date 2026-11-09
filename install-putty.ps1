@@ -24,6 +24,10 @@
 # AFTERWARDS     Open PuTTY and load a session - it's already themed.
 #                (PuTTY can't follow Windows light/dark mode, so pick one.)
 # =============================================================================
+# Printing progress to the screen is the point of an installer, so the
+# "avoid Write-Host" style warning doesn't apply here.
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Justification = 'Interactive installer output')]
+[CmdletBinding(SupportsShouldProcess)]
 param(
     [ValidateSet('Dark', 'Light')]
     [string]$Variant = 'Dark',
@@ -63,10 +67,14 @@ function ConvertTo-RegLine([string]$Name, $Value) {
     return ('"{0}"="{1}"' -f $Name, $Escaped)
 }
 
-function Set-PuttyValues($Settings) {
+function Set-PuttySetting {
     # Writes settings into the registry, creating a session key if it's missing.
+    # Run the script with -WhatIf to see what would change without changing it.
+    [CmdletBinding(SupportsShouldProcess)]
+    param($Settings)
     foreach ($S in $Settings) {
         $Path = "$Sessions\$($S.Session)"
+        if (-not $PSCmdlet.ShouldProcess(($S.Session -replace '%20', ' '), "set $($S.Name) = $($S.Data)")) { continue }
         if (-not (Test-Path $Path)) { New-Item -Path $Path -Force | Out-Null }
         Set-ItemProperty -Path $Path -Name $S.Name -Value $S.Data -Type $S.Type
     }
@@ -75,7 +83,7 @@ function Set-PuttyValues($Settings) {
 # --- Undo mode: put a backup back -------------------------------------------
 if ($Restore) {
     $Settings = @(ConvertFrom-RegText (Get-Content $Restore -Raw))
-    Set-PuttyValues $Settings
+    Set-PuttySetting $Settings
     Write-Host "Restored $($Settings.Count) setting(s) from $Restore"
     return
 }
@@ -125,7 +133,7 @@ Write-Host "Backed up your current PuTTY settings to $Backup"
 
 # --- 4. Apply the theme -------------------------------------------------------
 foreach ($Session in $Targets) {
-    Set-PuttyValues @($Theme | ForEach-Object {
+    Set-PuttySetting @($Theme | ForEach-Object {
         [pscustomobject]@{ Session = $Session; Name = $_.Name; Type = $_.Type; Data = $_.Data }
     })
     # Session names are stored with spaces as %20; show them normally.
