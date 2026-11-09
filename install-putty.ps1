@@ -1,7 +1,7 @@
 # =============================================================================
-# Dusk Rose for PuTTY - install on Windows (no admin rights needed)
+# Rose All Night for PuTTY - install on Windows (no admin rights needed)
 #
-# WHAT IT DOES   Sets PuTTY's colours to Dusk Rose (or Dusk Rose Light) for new
+# WHAT IT DOES   Sets PuTTY's colours to Rose All Night (or Rose All Day) for new
 #                sessions AND every session you've already saved. Also turns
 #                off cursor blinking and switches the font to Consolas 12pt
 #                with ClearType smoothing (easier to read than the default).
@@ -116,7 +116,7 @@ if (Test-Path $Sessions) {
 # Only the values this script touches, so restoring can't disturb anything else.
 $Backup = Join-Path $HOME ('putty-backup-{0:yyyy-MM-dd-HHmmss}.reg' -f (Get-Date))
 $Lines = @('Windows Registry Editor Version 5.00', '',
-           '; Dusk Rose installer backup. Undo with:',
+           '; Rose All Night installer backup. Undo with:',
            "; .\install-putty.ps1 -Restore `"$Backup`"", '')
 foreach ($Session in $Targets) {
     $Path = "$Sessions\$Session"
@@ -139,5 +139,5 @@ foreach ($Session in $Targets) {
     # Session names are stored with spaces as %20; show them normally.
     Write-Host ('  themed: ' + ($Session -replace '%20', ' '))
 }
-Write-Host "Done - Dusk Rose $Variant applied to $($Targets.Count) PuTTY session(s)."
+Write-Host "Done - Rose All Night ($Variant) applied to $($Targets.Count) PuTTY session(s)."
 Write-Host "To undo: .\install-putty.ps1 -Restore `"$Backup`""

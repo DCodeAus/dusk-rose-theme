@@ -1,4 +1,6 @@
-# Dusk Rose
+# Rosé All Night
+
+*…and Rosé All Day.*
 
 A VS Code theme for long coding sessions. It has a soft slate background, a dusty-rose accent and muted pastel syntax colours, plus a matching light version for daytime.
 
@@ -67,10 +69,10 @@ This themes **new sessions and every saved session**. It also turns off cursor b
 
 Both use the same colours as the VS Code terminal and PuTTY. Neither needs admin rights.
 
-**iTerm2:** download [`iterm/Dusk Rose.itermcolors`](iterm/) and double-click it. That adds it to iTerm's colour list. Then go to **Settings › Profiles › Colors › Color Presets…** and choose **Dusk Rose**.
-To switch with your Mac's light/dark mode, tick **Use separate colors for light and dark mode** on that tab. Choose **Dusk Rose Light** while the light side is selected and **Dusk Rose** while the dark side is selected.
+**iTerm2:** download [`iterm/Rosé All Night.itermcolors`](iterm/) and double-click it. That adds it to iTerm's colour list. Then go to **Settings › Profiles › Colors › Color Presets…** and choose **Rosé All Night**.
+To switch with your Mac's light/dark mode, tick **Use separate colors for light and dark mode** on that tab. Choose **Rosé All Day** while the light side is selected and **Rosé All Night** while the dark side is selected.
 
-**Terminal (built-in app):** download [`terminal-app/Dusk Rose.terminal`](terminal-app/) and double-click it. A window opens using it. Then go to **Terminal › Settings › Profiles**, select **Dusk Rose** and click **Default**. The cursor doesn't blink. For comfort, also click **Change…** under Font and pick SF Mono or Menlo at 13pt. Terminal can't switch with light/dark mode, so pick one.
+**Terminal (built-in app):** download [`terminal-app/Rosé All Night.terminal`](terminal-app/) and double-click it. A window opens using it. Then go to **Terminal › Settings › Profiles**, select **Rosé All Night** and click **Default**. The cursor doesn't blink. For comfort, also click **Change…** under Font and pick SF Mono or Menlo at 13pt. Terminal can't switch with light/dark mode, so pick one.
 
 ## Recommended settings
 
@@ -81,6 +83,8 @@ These make VS Code switch to the light theme when your computer is in light mode
 "workbench.preferredDarkColorTheme": "Dusk Rose",
 "workbench.preferredLightColorTheme": "Dusk Rose Light",
 "workbench.colorTheme": "Dusk Rose",
+// (Settings use the original IDs "Dusk Rose" / "Dusk Rose Light";
+//  the theme picker shows them as Rosé All Night / Rosé All Day.)
 "editor.fontSize": 14,
 "editor.lineHeight": 1.6,
 "terminal.integrated.fontSize": 13,

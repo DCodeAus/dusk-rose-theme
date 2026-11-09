@@ -1,22 +1,56 @@
 {
   "name": "dusk-rose",
-  "displayName": "Dusk Rose",
-  "description": "A low eye-strain VS Code theme: soft slate background, dusty-rose accent, muted pastel syntax. Dark + matching light version.",
-  "version": "0.3.0",
+  "displayName": "Rosé All Night",
+  "description": "Rosé All Night (dark) and Rosé All Day (light): a low eye-strain VS Code theme for all-hours coding. Soft slate, dusty-rose and orange accents, muted pastel syntax.",
+  "version": "0.4.0",
   "publisher": "dcodeaus",
   "license": "MIT",
   "icon": "icon.png",
-  "repository": { "type": "git", "url": "https://github.com/DCodeAus/dusk-rose-theme" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DCodeAus/dusk-rose-theme"
+  },
   "homepage": "https://github.com/DCodeAus/dusk-rose-theme#readme",
-  "bugs": { "url": "https://github.com/DCodeAus/dusk-rose-theme/issues" },
-  "keywords": ["theme", "dark", "light", "pink", "rose", "eye strain", "low contrast", "pastel"],
-  "galleryBanner": { "color": "#1d1e26", "theme": "dark" },
-  "engines": { "vscode": "^1.70.0" },
-  "categories": ["Themes"],
+  "bugs": {
+    "url": "https://github.com/DCodeAus/dusk-rose-theme/issues"
+  },
+  "keywords": [
+    "dark",
+    "eye strain",
+    "light",
+    "low contrast",
+    "orange",
+    "pastel",
+    "pink",
+    "rose",
+    "rose all night",
+    "rosé",
+    "theme"
+  ],
+  "galleryBanner": {
+    "color": "#1d1e26",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Themes"
+  ],
   "contributes": {
     "themes": [
-      { "label": "Dusk Rose", "uiTheme": "vs-dark", "path": "./themes/dusk-rose-color-theme.json" },
-      { "label": "Dusk Rose Light", "uiTheme": "vs", "path": "./themes/dusk-rose-light-color-theme.json" }
+      {
+        "id": "Dusk Rose",
+        "label": "Rosé All Night",
+        "uiTheme": "vs-dark",
+        "path": "./themes/dusk-rose-color-theme.json"
+      },
+      {
+        "id": "Dusk Rose Light",
+        "label": "Rosé All Day",
+        "uiTheme": "vs",
+        "path": "./themes/dusk-rose-light-color-theme.json"
+      }
     ]
   }
 }

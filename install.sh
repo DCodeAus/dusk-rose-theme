@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Dusk Rose - install / update on macOS or Linux
+# Rosé All Night - install / update on macOS or Linux
 #
-# WHAT IT DOES   Downloads the newest Dusk Rose release from GitHub and installs
+# WHAT IT DOES   Downloads the newest Rosé All Night release from GitHub and installs
 #                it into VS Code. Run it again any time to update.
 # YOU NEED       VS Code with the `code` command available. If `code` isn't found:
 #                open VS Code > Cmd+Shift+P > "Shell Command: Install 'code'
@@ -22,7 +22,7 @@ if ! command -v code >/dev/null 2>&1; then
 fi
 
 # Ask GitHub for the newest release and pick out the .vsix download link.
-echo "Finding the latest Dusk Rose release..."
+echo "Finding the latest Rosé All Night release..."
 URL=$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" \
       | grep -o '"browser_download_url": *"[^"]*\.vsix"' | head -1 | cut -d'"' -f4)
 if [ -z "$URL" ]; then

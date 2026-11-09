@@ -1,4 +1,4 @@
-"""Preview file: open in VS Code to see Dusk Rose on Python."""
+"""Preview file: open in VS Code to see Rosé All Night on Python."""
 from dataclasses import dataclass
 import json
 
