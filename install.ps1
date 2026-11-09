@@ -1,7 +1,7 @@
 # =============================================================================
-# Dusk Rose - install / update on Windows
+# Rose All Night - install / update on Windows
 #
-# WHAT IT DOES   Downloads the newest Dusk Rose release from GitHub and installs
+# WHAT IT DOES   Downloads the newest Rose All Night release from GitHub and installs
 #                it into VS Code. Run it again any time to update.
 # YOU NEED       VS Code installed normally (the installer adds the `code` command).
 # HOW TO RUN     In PowerShell:
@@ -23,7 +23,7 @@ if (-not (Get-Command code -ErrorAction SilentlyContinue)) {
 }
 
 # Ask GitHub for the newest release and pick out the .vsix download link.
-Write-Host 'Finding the latest Dusk Rose release...'
+Write-Host 'Finding the latest Rose All Night release...'
 $Release = Invoke-RestMethod "https://api.github.com/repos/$Repo/releases/latest"
 $Asset = $Release.assets | Where-Object { $_.name -like '*.vsix' } | Select-Object -First 1
 if (-not $Asset) {
