@@ -17,7 +17,7 @@ A VS Code theme for long coding sessions. It has a soft slate background, a dust
 | Strings | `#a9d1a0` | `#4d7a3f` |
 | Functions | `#8fbce6` | `#2f69a3` |
 | Types / classes | `#c3aef0` | `#7650b8` |
-| Numbers / constants | `#edbb8f` | `#a8591e` |
+| Numbers, constants, decorators (orange) | `#f4a466` | `#ad4f12` |
 | Properties / keys | `#9fd4d2` | `#237873` |
 | Comments | `#858aa0` | `#6f6a78` |
 

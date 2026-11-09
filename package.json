@@ -2,7 +2,7 @@
   "name": "dusk-rose",
   "displayName": "Dusk Rose",
   "description": "A low eye-strain VS Code theme: soft slate background, dusty-rose accent, muted pastel syntax. Dark + matching light version.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "dcodeaus",
   "license": "MIT",
   "icon": "icon.png",
