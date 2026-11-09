@@ -87,10 +87,20 @@ These make VS Code switch to the light theme when your computer is in light mode
 //  the theme picker shows them as Rosé All Night / Rosé All Day.)
 "editor.fontSize": 14,
 "editor.lineHeight": 1.6,
+"editor.fontFamily": "'JetBrains Mono', Menlo, Consolas, monospace",
+"editor.fontLigatures": false,
+"terminal.integrated.fontFamily": "'JetBrains Mono', Menlo, Consolas, monospace",
 "terminal.integrated.fontSize": 13,
 "editor.cursorBlinking": "smooth",
 "editor.renderLineHighlight": "gutter"
 ```
+
+**Font:** [JetBrains Mono](https://www.jetbrains.com/lp/mono/) is free and has real italics. Menlo, the Mac default, only slants its upright letters, so the theme's italic comments and parameters look smeared. JetBrains Mono also has tall lowercase letters and makes `0/O` and `1/l/I` easy to tell apart. If a machine doesn't have it, VS Code falls back to Menlo or Consolas, so the settings are safe to sync everywhere.
+
+- **Mac:** `brew install --cask font-jetbrains-mono`
+- **Windows:** download it, unzip it, select the `.ttf` files in `fonts/ttf`, then right-click and choose **Install**. That's a per-user install, so no admin is needed.
+
+Restart VS Code fully after installing the font.
 
 ## Change a colour
 
