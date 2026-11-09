@@ -61,7 +61,11 @@ This themes **new sessions and every saved session**. It also turns off cursor b
   ```
   PuTTY can't follow Windows light/dark mode, so pick whichever suits the room you usually work in.
 - **"Running scripts is disabled":** if you downloaded the file, run `powershell -ExecutionPolicy Bypass -File .\install-putty.ps1`. This applies to that one run only and doesn't need admin. The `irm` commands above aren't affected.
-- **Preview first:** add `-WhatIf` to see every change without making it (download the file and run it with `.\install-putty.ps1 -WhatIf`).
+- **Preview first:** add `-WhatIf` to see every change without making it. Nothing is written, not even the backup file. Each change prints a line like `What if: Performing the operation "set Colour0 = 214,215,224" on target "Default Settings"`. Then run the same command without `-WhatIf` to apply it.
+  ```powershell
+  & ([scriptblock]::Create((irm https://raw.githubusercontent.com/DCodeAus/dusk-rose-theme/main/install-putty.ps1))) -WhatIf
+  ```
+  It also works on a downloaded copy (`.\install-putty.ps1 -WhatIf`) and with `-Restore`, so you can preview an undo too. The plain `irm … | iex` command can't take options, so use one of these forms instead.
 - **Portable PuTTY** keeps its settings in a file instead of the registry, so this script can't theme it.
 - **New sessions only, no script:** double-click [`putty/dusk-rose.reg`](putty/dusk-rose.reg) or [`putty/dusk-rose-light.reg`](putty/dusk-rose-light.reg), if your PC allows `.reg` files.
 
