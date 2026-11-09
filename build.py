@@ -81,7 +81,8 @@ DARK = {
     "green": "#a9d1a0",       # strings
     "blue": "#8fbce6",        # functions
     "lavender": "#c3aef0",    # types / classes
-    "peach": "#edbb8f",       # numbers, constants, decorators
+    "orange": "#f4a466",      # second accent: numbers, constants, decorators, warnings
+    "peach": "#edbb8f",       # softer orange: search highlights, terminal yellow
     "teal": "#9fd4d2",        # properties, keys
     "red": "#ef7a85",         # errors
     "comment": "#858aa0",
@@ -131,6 +132,7 @@ LIGHT = {
     "green": "#4d7a3f",
     "blue": "#2f69a3",
     "lavender": "#7650b8",
+    "orange": "#ad4f12",
     "peach": "#a8591e",
     "teal": "#237873",
     "red": "#c23545",
@@ -157,7 +159,7 @@ LIGHT = {
 MIN_CONTRAST = 4.5
 MAX_DARK_CONTRAST = 13.0
 # Roles that are code text and must be readable on the editor background.
-TEXT_ROLES = ["fg", "rose", "green", "blue", "lavender", "peach", "teal", "red",
+TEXT_ROLES = ["fg", "rose", "green", "blue", "lavender", "orange", "peach", "teal", "red",
               "comment", "punct", "param", "fg_muted"]
 
 
@@ -254,11 +256,11 @@ def ui_colours(p):
         "editorBracketHighlight.foreground2": p["blue"],
         "editorBracketHighlight.foreground3": p["lavender"],
         "editorBracketHighlight.foreground4": p["green"],
-        "editorBracketHighlight.foreground5": p["peach"],
+        "editorBracketHighlight.foreground5": p["orange"],
         "editorBracketHighlight.foreground6": p["teal"],
         "editorBracketHighlight.unexpectedBracket.foreground": p["red"],
         "editorError.foreground": p["red"],
-        "editorWarning.foreground": p["peach"],
+        "editorWarning.foreground": p["orange"],
         "editorInfo.foreground": p["blue"],
         "editorHint.foreground": p["teal"],
         "editorUnnecessaryCode.opacity": "#000000a0",
@@ -280,7 +282,7 @@ def ui_colours(p):
         # Scrollbar markers + minimap
         "editorOverviewRuler.border": "#00000000",
         "editorOverviewRuler.errorForeground": a(p["red"], "b0"),
-        "editorOverviewRuler.warningForeground": a(p["peach"], "b0"),
+        "editorOverviewRuler.warningForeground": a(p["orange"], "b0"),
         "editorOverviewRuler.infoForeground": a(p["blue"], "b0"),
         "editorOverviewRuler.addedForeground": a(p["green"], "90"),
         "editorOverviewRuler.modifiedForeground": a(p["blue"], "90"),
@@ -291,7 +293,7 @@ def ui_colours(p):
         "minimap.selectionHighlight": a(p["rose"], "60"),
         "minimap.findMatchHighlight": a(p["peach"], "80"),
         "minimap.errorHighlight": a(p["red"], "a0"),
-        "minimap.warningHighlight": a(p["peach"], "a0"),
+        "minimap.warningHighlight": a(p["orange"], "a0"),
         "minimapGutter.addedBackground": a(p["green"], "a0"),
         "minimapGutter.modifiedBackground": a(p["blue"], "a0"),
         "minimapGutter.deletedBackground": a(p["red"], "a0"),
@@ -361,7 +363,7 @@ def ui_colours(p):
         "tab.unfocusedActiveForeground": p["fg_muted"],
         "tab.hoverBackground": p["hover"],
         "tab.border": p["bg_deep"],
-        "tab.activeModifiedBorder": p["peach"],
+        "tab.activeModifiedBorder": p["orange"],
 
         # Activity bar (icons down the far left) + side bar
         "activityBar.background": p["bg_alt"],
@@ -387,7 +389,7 @@ def ui_colours(p):
         "list.highlightForeground": p["rose"],
         "list.focusOutline": a(p["rose"], "50"),
         "list.errorForeground": p["red"],
-        "list.warningForeground": p["peach"],
+        "list.warningForeground": p["orange"],
         "list.dropBackground": a(p["rose"], "18"),
         "tree.indentGuidesStroke": p["indent_active"],
 
@@ -422,7 +424,7 @@ def ui_colours(p):
         "notifications.border": p["widget_border"],
         "notificationCenterHeader.background": p["bg_alt"],
         "notificationsErrorIcon.foreground": p["red"],
-        "notificationsWarningIcon.foreground": p["peach"],
+        "notificationsWarningIcon.foreground": p["orange"],
         "notificationsInfoIcon.foreground": p["blue"],
         "notificationLink.foreground": p["blue"],
 
@@ -438,7 +440,7 @@ def ui_colours(p):
         "statusBarItem.remoteForeground": p["on_accent"],
         "statusBarItem.errorBackground": p["red"],
         "statusBarItem.errorForeground": p["on_accent"],
-        "statusBarItem.warningBackground": p["peach"],
+        "statusBarItem.warningBackground": p["orange"],
         "statusBarItem.warningForeground": p["on_accent"],
         "statusBarItem.prominentBackground": a(p["rose"], "30"),
         "titleBar.activeBackground": p["bg_alt"],
@@ -464,7 +466,7 @@ def ui_colours(p):
         "inputValidation.errorBackground": p["widget"],
         "inputValidation.errorBorder": p["red"],
         "inputValidation.warningBackground": p["widget"],
-        "inputValidation.warningBorder": p["peach"],
+        "inputValidation.warningBorder": p["orange"],
         "inputValidation.infoBackground": p["widget"],
         "inputValidation.infoBorder": p["blue"],
         "dropdown.background": p["widget"],
@@ -490,14 +492,14 @@ def ui_colours(p):
         "textBlockQuote.background": p["bg_alt"],
         "textBlockQuote.border": a(p["rose"], "80"),
         "textCodeBlock.background": p["bg_alt"],
-        "textPreformat.foreground": p["peach"],
+        "textPreformat.foreground": p["orange"],
 
         # Git colours in the file explorer
         "gitDecoration.modifiedResourceForeground": p["blue"],
         "gitDecoration.untrackedResourceForeground": p["green"],
         "gitDecoration.addedResourceForeground": p["green"],
         "gitDecoration.deletedResourceForeground": p["red"],
-        "gitDecoration.conflictingResourceForeground": p["peach"],
+        "gitDecoration.conflictingResourceForeground": p["orange"],
         "gitDecoration.ignoredResourceForeground": p["fg_faint"],
 
         # Debugging
@@ -508,13 +510,13 @@ def ui_colours(p):
         "debugIcon.breakpointForeground": p["red"],
         "debugIcon.startForeground": p["green"],
         "debugConsole.infoForeground": p["blue"],
-        "debugConsole.warningForeground": p["peach"],
+        "debugConsole.warningForeground": p["orange"],
         "debugConsole.errorForeground": p["red"],
 
         # Testing
         "testing.iconPassed": p["green"],
         "testing.iconFailed": p["red"],
-        "testing.iconQueued": p["peach"],
+        "testing.iconQueued": p["orange"],
 
         # Welcome page / walkthroughs
         "welcomePage.tileBackground": p["widget"],
@@ -568,7 +570,7 @@ def token_colours(p):
               "punctuation.terminator"], p["punct"]),
         rule(["string", "string.quoted", "string.template", "punctuation.definition.string"], p["green"]),
         rule(["constant.character.escape", "string.regexp"], p["teal"]),
-        rule(["constant.numeric", "constant.language", "support.constant", "constant.other"], p["peach"]),
+        rule(["constant.numeric", "constant.language", "support.constant", "constant.other"], p["orange"]),
         rule(["entity.name.function", "support.function", "meta.function-call entity.name.function",
               "variable.function"], p["blue"]),
         rule(["entity.name.type", "entity.name.class", "support.type", "support.class",
@@ -579,9 +581,9 @@ def token_colours(p):
         rule(["variable.other.property", "variable.other.object.property", "support.variable.property",
               "meta.object-literal.key", "support.type.property-name"], p["teal"]),
         rule(["entity.name.tag"], p["rose"]),
-        rule(["entity.other.attribute-name"], p["peach"], "italic"),
+        rule(["entity.other.attribute-name"], p["orange"], "italic"),
         rule(["entity.name.namespace", "entity.name.module", "entity.name.type.module"], p["lavender"]),
-        rule(["meta.decorator", "entity.name.function.decorator", "punctuation.decorator"], p["peach"], "italic"),
+        rule(["meta.decorator", "entity.name.function.decorator", "punctuation.decorator"], p["orange"], "italic"),
         # Keys in YAML/JSON/TOML config files read as properties (teal), not HTML tags.
         rule(["entity.name.tag.yaml", "support.type.property-name.json", "support.type.property-name.toml",
               "keyword.other.definition.ini"], p["teal"]),
@@ -617,11 +619,11 @@ def semantic_colours(p):
         "typeParameter": p["lavender"],
         "namespace": p["lavender"],
         "module": p["lavender"],
-        "enumMember": p["peach"],
-        "decorator": {"foreground": p["peach"], "italic": True},
-        "macro": p["peach"],
+        "enumMember": p["orange"],
+        "decorator": {"foreground": p["orange"], "italic": True},
+        "macro": p["orange"],
         "event": p["teal"],
-        "variable.readonly": p["peach"],
+        "variable.readonly": p["orange"],
         "*.deprecated": {"strikethrough": True},
     }
 

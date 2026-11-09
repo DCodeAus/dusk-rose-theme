@@ -9,3 +9,4 @@ putty/**
 install-putty.ps1
 iterm/**
 terminal-app/**
+__pycache__/**
