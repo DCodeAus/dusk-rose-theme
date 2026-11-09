@@ -1,0 +1,21 @@
+# Runs on every pull request and push to main:
+#   checks the theme files match build.py and every colour is readable,
+#   then makes sure the extension still packages.
+name: Check theme
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: python build.py --check
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - run: npx --yes @vscode/vsce package

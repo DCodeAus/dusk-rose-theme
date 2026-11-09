@@ -1,0 +1,12 @@
+# Preview file: YAML
+name: Check theme
+on:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "hello"   # a comment

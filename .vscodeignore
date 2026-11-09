@@ -1,0 +1,7 @@
+samples/**
+build.py
+install.sh
+install.ps1
+.github/**
+.gitignore
+*.vsix

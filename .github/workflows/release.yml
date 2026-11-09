@@ -1,0 +1,29 @@
+# Publishing a new version:
+#   1. bump "version" in package.json (via a pull request) and merge it
+#   2. git tag v0.3.0 && git push origin v0.3.0   (match the version number)
+# This workflow then builds the .vsix and attaches it to a GitHub Release,
+# which is what install.sh / install.ps1 download.
+name: Release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: python build.py --check
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - name: Check tag matches package.json version
+        run: |
+          v=$(node -p "require('./package.json').version")
+          [ "v$v" = "$GITHUB_REF_NAME" ] || { echo "Tag $GITHUB_REF_NAME doesn't match package.json version $v"; exit 1; }
+      - run: npx --yes @vscode/vsce package
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" *.vsix --title "Dusk Rose $GITHUB_REF_NAME" --generate-notes

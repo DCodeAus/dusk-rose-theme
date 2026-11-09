@@ -1,0 +1,7 @@
+{
+  "name": "preview",
+  "version": "1.0.0",
+  "enabled": true,
+  "retries": 3,
+  "nested": { "deep": { "deeper": ["a", "b", null] } }
+}

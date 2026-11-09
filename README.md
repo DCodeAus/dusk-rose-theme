@@ -1,0 +1,72 @@
+# Dusk Rose
+
+A VS Code theme for long coding sessions. It has a soft slate background, a dusty-rose accent and muted pastel syntax colours, plus a matching light version for daytime.
+
+![icon](icon.png)
+
+## Why it's easy on the eyes
+
+- **No pure black or pure white.** The dark background is slate `#1d1e26` and the light one is warm off-white `#faf6f4`. Bright text on pure black tends to glow and blur. Pure white glares in a bright room.
+- **Muted colours, not neon.** Every syntax colour is readable (at least 4.5:1 contrast) but not glaring (the dark theme stays under 13:1). `build.py` checks this every time it runs, so a tweak can't quietly make the theme worse.
+- **One accent colour.** Dusty rose marks the important things: keywords, the cursor, the current line number and the active tab. Everything else stays calm, so your eye has a resting place.
+- **Every part of VS Code is styled.** That includes ghost-text suggestions, inlay hints, diffs, merge conflicts, menus and the terminal, so nothing falls back to VS Code's default bright blue.
+
+| Role | Dark | Light |
+|---|---|---|
+| Keywords / accent | `#e7a1c1` | `#b0396e` |
+| Strings | `#a9d1a0` | `#4d7a3f` |
+| Functions | `#8fbce6` | `#2f69a3` |
+| Types / classes | `#c3aef0` | `#7650b8` |
+| Numbers / constants | `#edbb8f` | `#a8591e` |
+| Properties / keys | `#9fd4d2` | `#237873` |
+| Comments | `#858aa0` | `#6f6a78` |
+
+## Install
+
+**macOS / Linux:**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/DCodeAus/dusk-rose-theme/main/install.sh | bash
+```
+
+**Windows (PowerShell):**
+
+```powershell
+irm https://raw.githubusercontent.com/DCodeAus/dusk-rose-theme/main/install.ps1 | iex
+```
+
+You can also download the `.vsix` file from [Releases](https://github.com/DCodeAus/dusk-rose-theme/releases) and install it with **Extensions › ⋯ › Install from VSIX…**.
+
+Run the same command again to update. Settings Sync copies your *settings* between machines, but it won't install this theme for you, so run the installer once on each machine.
+
+## Recommended settings
+
+These make VS Code switch to the light theme when your computer is in light mode and back to dark at night. They also give the text more room:
+
+```jsonc
+"window.autoDetectColorScheme": true,
+"workbench.preferredDarkColorTheme": "Dusk Rose",
+"workbench.preferredLightColorTheme": "Dusk Rose Light",
+"workbench.colorTheme": "Dusk Rose",
+"editor.fontSize": 14,
+"editor.lineHeight": 1.6,
+"terminal.integrated.fontSize": 13,
+"editor.cursorBlinking": "smooth",
+"editor.renderLineHighlight": "gutter"
+```
+
+## Change a colour
+
+1. Edit the colour in `DARK` or `LIGHT` near the top of `build.py`.
+2. Run `python3 build.py`. If a colour is too faint, it tells you.
+3. Preview it locally:
+   ```bash
+   npx @vscode/vsce package
+   code --install-extension dusk-rose-*.vsix --force
+   ```
+   Then in VS Code, run **Developer: Reload Window**. Open the files in `samples/` to see each language.
+4. To release it to your other machines, bump `version` in `package.json` and merge the change. Then run `git tag vX.Y.Z && git push origin vX.Y.Z`. GitHub builds the release, and the install command picks it up.
+
+## Licence
+
+MIT

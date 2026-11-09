@@ -1,0 +1,22 @@
+{
+  "name": "dusk-rose",
+  "displayName": "Dusk Rose",
+  "description": "A low eye-strain VS Code theme: soft slate background, dusty-rose accent, muted pastel syntax. Dark + matching light version.",
+  "version": "0.2.0",
+  "publisher": "dcodeaus",
+  "license": "MIT",
+  "icon": "icon.png",
+  "repository": { "type": "git", "url": "https://github.com/DCodeAus/dusk-rose-theme" },
+  "homepage": "https://github.com/DCodeAus/dusk-rose-theme#readme",
+  "bugs": { "url": "https://github.com/DCodeAus/dusk-rose-theme/issues" },
+  "keywords": ["theme", "dark", "light", "pink", "rose", "eye strain", "low contrast", "pastel"],
+  "galleryBanner": { "color": "#1d1e26", "theme": "dark" },
+  "engines": { "vscode": "^1.70.0" },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      { "label": "Dusk Rose", "uiTheme": "vs-dark", "path": "./themes/dusk-rose-color-theme.json" },
+      { "label": "Dusk Rose Light", "uiTheme": "vs", "path": "./themes/dusk-rose-light-color-theme.json" }
+    ]
+  }
+}
