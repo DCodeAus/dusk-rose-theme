@@ -21,10 +21,12 @@ jobs:
       security-events: write   # needed to upload results to Code scanning
     steps:
       - uses: actions/checkout@v4
-      - uses: microsoft/psscriptanalyzer-action@v1.1
+      - uses: microsoft/psscriptanalyzer-action@6b2948b1944407914a58661c49941824d149734f # v1.1
         with:
           path: .
           recurse: true
+          # samples/ holds deliberately simple preview files for checking colours
+          ignorePattern: 'samples'
           output: psscriptanalyzer.sarif
       - uses: github/codeql-action/upload-sarif@v4
         with:
@@ -34,4 +36,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ludeeus/action-shellcheck@2.0.0
+      - uses: ludeeus/action-shellcheck@00cae500b08a931fb5698e11e79bfbd38e612a38 # 2.0.0
