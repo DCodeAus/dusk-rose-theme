@@ -7,3 +7,5 @@ install.ps1
 *.vsix
 putty/**
 install-putty.ps1
+iterm/**
+terminal-app/**

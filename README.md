@@ -62,6 +62,15 @@ This themes **new sessions and every saved session**. It also turns off cursor b
 - **Portable PuTTY** keeps its settings in a file instead of the registry, so this script can't theme it.
 - **New sessions only, no script:** double-click [`putty/dusk-rose.reg`](putty/dusk-rose.reg) or [`putty/dusk-rose-light.reg`](putty/dusk-rose-light.reg), if your PC allows `.reg` files.
 
+## Mac terminals
+
+Both use the same colours as the VS Code terminal and PuTTY. Neither needs admin rights.
+
+**iTerm2:** download [`iterm/Dusk Rose.itermcolors`](iterm/) and double-click it. That adds it to iTerm's colour list. Then go to **Settings › Profiles › Colors › Color Presets…** and choose **Dusk Rose**.
+To switch with your Mac's light/dark mode, tick **Use separate colors for light and dark mode** on that tab. Choose **Dusk Rose Light** while the light side is selected and **Dusk Rose** while the dark side is selected.
+
+**Terminal (built-in app):** download [`terminal-app/Dusk Rose.terminal`](terminal-app/) and double-click it. A window opens using it. Then go to **Terminal › Settings › Profiles**, select **Dusk Rose** and click **Default**. The cursor doesn't blink. For comfort, also click **Change…** under Font and pick SF Mono or Menlo at 13pt. Terminal can't switch with light/dark mode, so pick one.
+
 ## Recommended settings
 
 These make VS Code switch to the light theme when your computer is in light mode and back to dark at night. They also give the text more room:

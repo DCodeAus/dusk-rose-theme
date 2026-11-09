@@ -10,6 +10,8 @@ WHAT THIS DOES
         themes/dusk-rose-light-color-theme.json  (Dusk Rose Light)
     and the matching PuTTY colour files:
         putty/dusk-rose.reg, putty/dusk-rose-light.reg
+    and for the Mac terminals:
+        iterm/*.itermcolors (iTerm2), terminal-app/*.terminal (Terminal app)
     It also checks every text colour is readable against its background and
     stops with an error if one is too faint, so a tweak can't quietly make the
     theme harder on your eyes.
@@ -703,6 +705,111 @@ PUTTY_OUTPUTS = {
 }
 
 
+# ---------------------------------------------------------------------------
+# 5. MAC TERMINALS - iTerm2 and the built-in Terminal app, same colours as
+#    the VS Code terminal and PuTTY.
+# ---------------------------------------------------------------------------
+
+def terminal_palette(p):
+    """The 16 standard terminal colours plus text/background/cursor/selection."""
+    tb = p["term_bright"]
+    return {
+        "background": p["bg_term"], "foreground": p["fg"], "bold": p["fg_bright"],
+        "cursor": p["rose_cursor"], "cursor_text": p["bg_term"],
+        "selection": p["selection"], "selected_text": p["fg_bright"], "link": p["blue"],
+        # ANSI 0-7 (normal) then 8-15 (bright), in the standard order.
+        "ansi": [
+            p["term_black"], p["red"], p["green"], p["peach"],
+            p["blue"], p["rose"], p["teal"],
+            p["fg_ui"] if p["type"] == "dark" else p["fg_muted"],
+            p["term_bright_black"], tb["red"], tb["green"], tb["yellow"],
+            tb["blue"], tb["magenta"], tb["cyan"],
+            tb["white"] if p["type"] == "light" else p["fg_bright"],
+        ],
+    }
+
+
+def _components(colour):
+    h = colour.lstrip("#")
+    return [int(h[i:i + 2], 16) / 255 for i in (0, 2, 4)]
+
+
+def build_itermcolors(p):
+    """iTerm2 colour preset (.itermcolors) - an XML property list."""
+    import plistlib
+
+    def colour(c):
+        r, g, b = _components(c)
+        return {"Color Space": "sRGB", "Red Component": r, "Green Component": g,
+                "Blue Component": b, "Alpha Component": 1.0}
+
+    t = terminal_palette(p)
+    preset = {f"Ansi {i} Color": colour(c) for i, c in enumerate(t["ansi"])}
+    preset.update({
+        "Background Color": colour(t["background"]),
+        "Foreground Color": colour(t["foreground"]),
+        "Bold Color": colour(t["bold"]),
+        "Cursor Color": colour(t["cursor"]),
+        "Cursor Text Color": colour(t["cursor_text"]),
+        "Selection Color": colour(t["selection"]),
+        "Selected Text Color": colour(t["selected_text"]),
+        "Link Color": colour(t["link"]),
+        "Cursor Guide Color": colour(p["line_hl"]),
+        "Badge Color": colour(p["rose"]),
+    })
+    return plistlib.dumps(preset, sort_keys=True)
+
+
+def build_terminal_profile(p):
+    """macOS Terminal profile (.terminal). Terminal stores each colour as a
+    small archived NSColor object, which we build by hand so this still runs
+    on Windows/Linux (and in the GitHub check)."""
+    import plistlib
+
+    def nscolor(c):
+        r, g, b = _components(c)
+        archive = {
+            "$archiver": "NSKeyedArchiver",
+            "$version": 100000,
+            "$top": {"root": plistlib.UID(1)},
+            "$objects": [
+                "$null",
+                {"NSColorSpace": 2,  # 2 = plain RGB, so hex values come out as written
+                 "NSRGB": f"{r:.6f} {g:.6f} {b:.6f}".encode() + b"\x00",
+                 "$class": plistlib.UID(2)},
+                {"$classname": "NSColor", "$classes": ["NSColor", "NSObject"]},
+            ],
+        }
+        return plistlib.dumps(archive, fmt=plistlib.FMT_BINARY, sort_keys=True)
+
+    t = terminal_palette(p)
+    names = ["Black", "Red", "Green", "Yellow", "Blue", "Magenta", "Cyan", "White"]
+    profile = {
+        "name": p["name"],
+        "type": "Window Settings",
+        "ProfileCurrentVersion": 2.07,
+        "BackgroundColor": nscolor(t["background"]),
+        "TextColor": nscolor(t["foreground"]),
+        "TextBoldColor": nscolor(t["bold"]),
+        "CursorColor": nscolor(t["cursor"]),
+        "SelectionColor": nscolor(t["selection"]),
+        "CursorBlink": False,       # steady cursor - less flicker in your eye line
+        "UseBrightBold": True,
+    }
+    for i, n in enumerate(names):
+        profile[f"ANSI{n}Color"] = nscolor(t["ansi"][i])
+        profile[f"ANSIBright{n}Color"] = nscolor(t["ansi"][i + 8])
+    return plistlib.dumps(profile, sort_keys=True)
+
+
+MAC_OUTPUTS = {
+    "iterm/Dusk Rose.itermcolors": (build_itermcolors, DARK),
+    "iterm/Dusk Rose Light.itermcolors": (build_itermcolors, LIGHT),
+    "terminal-app/Dusk Rose.terminal": (build_terminal_profile, DARK),
+    "terminal-app/Dusk Rose Light.terminal": (build_terminal_profile, LIGHT),
+}
+
+
 def main():
     check_only = "--check" in sys.argv
     problems = []
@@ -712,10 +819,11 @@ def main():
     # Every generated file and its expected contents.
     files = {rel: json.dumps(build_theme(p), indent=2) + "\n" for rel, p in OUTPUTS.items()}
     files.update({rel: build_putty_reg(p) for rel, p in PUTTY_OUTPUTS.items()})
+    files.update({rel: fn(p) for rel, (fn, p) in MAC_OUTPUTS.items()})
 
     for rel_path, text in files.items():
         path = HERE / rel_path
-        data = text.encode("utf-8")
+        data = text if isinstance(text, bytes) else text.encode("utf-8")
         if check_only:
             if not path.exists() or path.read_bytes() != data:
                 problems.append(f"{rel_path} is out of date - run: python3 build.py")
