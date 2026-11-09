@@ -1,8 +1,14 @@
 # Publishing a new version:
 #   1. bump "version" in package.json (via a pull request) and merge it
-#   2. git tag v0.3.0 && git push origin v0.3.0   (match the version number)
-# This workflow then builds the .vsix and attaches it to a GitHub Release,
-# which is what install.sh / install.ps1 download.
+#   2. git tag v0.4.1 && git push origin v0.4.1   (match the version number)
+# This workflow then:
+#   - builds the .vsix and attaches it to a GitHub Release (what install.sh /
+#     install.ps1 download)
+#   - publishes it to the VS Code Marketplace, if the VSCE_PAT secret is set
+#   - publishes it to Open VSX (Cursor, VSCodium, Windsurf...), if the
+#     OVSX_PAT secret is set
+# Until a token exists, its store step prints "skipped" and the release still
+# succeeds. Add tokens with:  gh secret set VSCE_PAT   /   gh secret set OVSX_PAT
 name: Release
 on:
   push:
@@ -23,7 +29,32 @@ jobs:
         run: |
           v=$(node -p "require('./package.json').version")
           [ "v$v" = "$GITHUB_REF_NAME" ] || { echo "Tag $GITHUB_REF_NAME doesn't match package.json version $v"; exit 1; }
-      - run: npx --yes @vscode/vsce package
-      - env:
+          echo "VSIX=dusk-rose-$v.vsix" >> "$GITHUB_ENV"
+      - name: Build the extension
+        run: npx --yes @vscode/vsce@4.1.0 package --out "$VSIX"
+
+      - name: GitHub Release
+        env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" *.vsix --title "Rosé All Night $GITHUB_REF_NAME" --generate-notes
+        run: gh release create "$GITHUB_REF_NAME" "$VSIX" --title "Rosé All Night $GITHUB_REF_NAME" --generate-notes
+
+      # The exact same .vsix file goes to every store, so all installs match.
+      # Both tools read their token from the environment variable, so it never
+      # appears on a command line.
+      - name: VS Code Marketplace
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: |
+          if [ -z "$VSCE_PAT" ]; then echo "skipped: no VSCE_PAT secret yet"; exit 0; fi
+          npx --yes @vscode/vsce@4.1.0 publish --packagePath "$VSIX"
+
+      - name: Open VSX
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: |
+          if [ -z "$OVSX_PAT" ]; then echo "skipped: no OVSX_PAT secret yet"; exit 0; fi
+          # First release only: claim the "dcodeaus" namespace if it doesn't exist yet.
+          if [ "$(curl -s -o /dev/null -w '%{http_code}' https://open-vsx.org/api/dcodeaus)" = "404" ]; then
+            npx --yes ovsx@1.3.0 create-namespace dcodeaus
+          fi
+          npx --yes ovsx@1.3.0 publish "$VSIX"
