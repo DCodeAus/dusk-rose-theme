@@ -47,11 +47,20 @@ PuTTY gets the same colours as the VS Code terminal. Close any PuTTY windows, th
 irm https://raw.githubusercontent.com/DCodeAus/dusk-rose-theme/main/install-putty.ps1 | iex
 ```
 
-This themes **new sessions and every saved session**. It also turns off cursor blinking and switches to Consolas 12pt with ClearType smoothing. PuTTY's default is Courier New 10pt, which is small and thin. Before changing anything, it backs up your PuTTY settings to `putty-backup-<date>.reg` in your user folder. Double-click that file to undo.
+This themes **new sessions and every saved session**. It also turns off cursor blinking and switches to Consolas 12pt with ClearType smoothing. PuTTY's default is Courier New 10pt, which is small and thin.
 
-- **Light version:** download `install-putty.ps1` and run `.\install-putty.ps1 -Variant Light`. PuTTY can't follow Windows light/dark mode, so pick whichever suits the room you usually work in.
-- **Keep your current font:** add `-KeepFont`.
-- **New sessions only, no script:** double-click [`putty/dusk-rose.reg`](putty/dusk-rose.reg) or [`putty/dusk-rose-light.reg`](putty/dusk-rose-light.reg).
+**No admin rights needed.** PuTTY stores its settings in your own part of the registry, and the script uses plain PowerShell, not `reg.exe` or regedit, which work PCs often block.
+
+**Undo:** before changing anything, it saves your current settings to `putty-backup-<date>.reg` in your user folder and prints the undo command, for example `.\install-putty.ps1 -Restore "$HOME\putty-backup-<date>.reg"`.
+
+- **Options** (light version, keep your current font):
+  ```powershell
+  & ([scriptblock]::Create((irm https://raw.githubusercontent.com/DCodeAus/dusk-rose-theme/main/install-putty.ps1))) -Variant Light -KeepFont
+  ```
+  PuTTY can't follow Windows light/dark mode, so pick whichever suits the room you usually work in.
+- **"Running scripts is disabled":** if you downloaded the file, run `powershell -ExecutionPolicy Bypass -File .\install-putty.ps1`. This applies to that one run only and doesn't need admin. The `irm` commands above aren't affected.
+- **Portable PuTTY** keeps its settings in a file instead of the registry, so this script can't theme it.
+- **New sessions only, no script:** double-click [`putty/dusk-rose.reg`](putty/dusk-rose.reg) or [`putty/dusk-rose-light.reg`](putty/dusk-rose-light.reg), if your PC allows `.reg` files.
 
 ## Recommended settings
 
