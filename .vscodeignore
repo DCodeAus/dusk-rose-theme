@@ -5,3 +5,7 @@ install.ps1
 .github/**
 .gitignore
 *.vsix
+putty/**
+install-putty.ps1
+iterm/**
+terminal-app/**
